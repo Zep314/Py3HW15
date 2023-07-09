@@ -51,7 +51,6 @@ class _MyLoggerDecorator:
             res = self.function(*args, **kwargs)
             self.logging.info(f'Выполнена функция {self.function.__name__}{tuple(args) if args else ""}'
                               f'{dict(**kwargs) if kwargs else ""} = {res}')
-
             return res
         except BaseException as e:
             self.logging.error(f'Ошибка! {e}')

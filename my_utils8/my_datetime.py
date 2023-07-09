@@ -3,6 +3,14 @@
 # - Преобразуйте его в дату в текущем году.
 # - Логируйте ошибки, если текст не соответсвует формату.
 
+#Задание No5
+# - Дорабатываем задачу 4.
+# - Добавьте возможность запуска из командной строки.
+# - При этом значение любого параметра можно опустить. В этом случае берётся первый в месяце день недели,
+# текущий день недели и/или текущий месяц.
+# - *Научите функцию распознавать не только текстовое названия дня недели и месяца, но и числовые,
+# т.е не мая, а 5.
+
 from datetime import datetime, timedelta
 
 def parse_date(text):
@@ -34,10 +42,10 @@ def parse_date(text):
     if len(parts) != 3:
         return None
 
-    s = parts[0][:parts[0].find("-")]
-    number = int(s)
-    day = dict_day_of_week[parts[1]]
-    month = dict_months[parts[2]]
+    # Обрабатываем не только строковые, но и числовые значения (задачка со *)
+    number = int(parts[0][:parts[0].find("-") if parts[0].find("-") != -1 else len(parts[0])])
+    day = int(parts[1]) if parts[1].isnumeric() else dict_day_of_week[parts[1]]
+    month = int(parts[2]) if parts[2].isnumeric() else dict_months[parts[2]]
 
     date = datetime(current_year, month, 1)
     day_of_week = date.weekday()
@@ -53,14 +61,3 @@ def parse_date(text):
         return res
     else:
         raise ValueError('no request date')
-
-
-
-# # Пример использования функции
-# text = "1-й четверг ноября"
-# result = parse_date(text)
-#
-# if result:
-#     print(f"Полученная дата: {result.strftime('%d.%m.%Y')}")
-# else:
-#     print("Некорректный формат текста")
