@@ -49,7 +49,8 @@ class _MyLoggerDecorator:
     def __call__(self, *args, **kwargs):
         try:
             res = self.function(*args, **kwargs)
-            self.logging.info(f'Выполнена функция {self.function.__name__}{tuple(args) if args else ""}'
+            self.logging.info(f'Выполнена функция {self.function.__name__}'
+                              f'({", ".join(list(str(_) for _ in args)) if args else ""})'
                               f'{dict(**kwargs) if kwargs else ""} = {res}')
             return res
         except BaseException as e:
